@@ -26,6 +26,11 @@ wheels/
 
 # Virtual environments
 .env
+
+# Personal guides & notes
+*Захист*.html
+defense_guide.html
+labs_summary.json
 .venv
 env/
 venv/

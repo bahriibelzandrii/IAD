@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Регресійний аналіз даних. Кореляція",
+    "discipline": "Інтелектуальний аналіз даних",
+    "code": "ІАД",
+    "lab_no": 2,
+    "student": "Багрій-Белз Андрій",
+    "group": "КН-2327б"
+  },
+  "part_1_anaconda": {
+    "dataset": "anaconda.dat",
+    "sample_size": 56,
+    "gender_counts": {
+      "M": 28,
+      "F": 28
+    },
+    "gender_encoding": "M -> 0, F -> 1",
+    "correlation_matrix": {
+      "X": {
+        "X": 1.0,
+        "Y": 0.9613874658476858,
+        "Gender_code": 0.7661223396038761
+      },
+      "Y": {
+        "X": 0.9613874658476858,
+        "Y": 1.0,
+        "Gender_code": 0.7299341502838178
+      },
+      "Gender_code": {
+        "X": 0.7661223396038761,
+        "Y": 0.7299341502838178,
+        "Gender_code": 1.0
+      }
+    },
+    "correlation_r": 0.9614,
+    "correlation_p_value": 6.181258363122617e-32,
+    "regression": {
+      "slope_a": 0.253,
+      "intercept_b": -50.7306,
+      "equation": "Y = 0.2530 * X + (-50.7306)",
+      "r2": 0.9243,
+      "mse": 31.925,
+      "rmse": 5.6502
+    },
+    "residuals": {
+      "mean": -8.43769498715119e-15,
+      "shapiro_w": 0.9176,
+      "shapiro_p": 0.0009673631292796055,
+      "is_normal_005": false
+    }
+  },
+  "part_2_custom": {
+    "dataset": "flats.csv (нерухомість України)",
+    "sample_size": 684,
+    "feature_x": "Загальна площа (м²)",
+    "target_y": "Ціна квартири (грн)",
+    "correlation_r": 0.6729,
+    "correlation_p_value": 2.408242947018382e-91,
+    "regression": {
+      "slope_a": 25180.99,
+      "intercept_b": -408119.63,
+      "equation": "Ціна = 25180.99 * Площа + (-408119.63)",
+      "r2": 0.4527,
+      "mse": 642447754526.78,
+      "rmse": 801528.39
+    }
+  }
+}

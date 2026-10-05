@@ -1,0 +1,18 @@
+{
+  "dataset": "Airline Passengers",
+  "horizon_periods": 36,
+  "models": {
+    "NaiveForecaster_last": {
+      "name": "Базова наївна модель (NaiveForecaster 'last')",
+      "MAE": 94.944,
+      "RMSE": 121.139,
+      "MAPE_percent": 19.89
+    },
+    "HoltWinters_ExponentialSmoothing": {
+      "name": "Експоненційне згладжування Гольта-Вінтерса (Add Trend + Add Seasonality)",
+      "MAE": 21.545,
+      "RMSE": 26.376,
+      "MAPE_percent": 5.11
+    }
+  }
+}

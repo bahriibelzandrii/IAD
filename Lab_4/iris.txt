@@ -1,0 +1,13 @@
+ Проводимо ваізуалізацію масиву даних з набору даних "iris"
+library(rgl)
+> plot3d(iris$Sepal.Length, iris$Sepal.Width, iris$Petal.Length,
++ col=as.numeric(iris$Species), size=3)
+З тримірного  графіку видно, що один з видів (Iris setosa) сильно відрізняється
+від інших за довжиною пелюсток
+
+Будуємо складені графіки
+ library(lattice)
+> xyplot(Sepal.Length ~ Petal.Length + Petal.Width | Species,
++ data=iris, auto.key=TRUE)
+
+

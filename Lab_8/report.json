@@ -1,0 +1,162 @@
+[
+  {
+    "rule": "mineral water, whole wheat pasta -> olive oil",
+    "base": "mineral water, whole wheat pasta",
+    "add": "olive oil",
+    "support": 0.0038661511798426876,
+    "confidence": 0.4027777777777778,
+    "lift": 6.115862573099416
+  },
+  {
+    "rule": "fromage blanc -> honey",
+    "base": "fromage blanc",
+    "add": "honey",
+    "support": 0.003332888948140248,
+    "confidence": 0.2450980392156863,
+    "lift": 5.164270764485569
+  },
+  {
+    "rule": "spaghetti, tomato sauce -> ground beef",
+    "base": "spaghetti, tomato sauce",
+    "add": "ground beef",
+    "support": 0.0030662578322890282,
+    "confidence": 0.4893617021276596,
+    "lift": 4.980599901844742
+  },
+  {
+    "rule": "light cream -> chicken",
+    "base": "light cream",
+    "add": "chicken",
+    "support": 0.004532728969470737,
+    "confidence": 0.29059829059829057,
+    "lift": 4.84395061728395
+  },
+  {
+    "rule": "pasta -> escalope",
+    "base": "pasta",
+    "add": "escalope",
+    "support": 0.005865884548726837,
+    "confidence": 0.3728813559322034,
+    "lift": 4.700811850163794
+  },
+  {
+    "rule": "french fries, herb & pepper -> ground beef",
+    "base": "french fries, herb & pepper",
+    "add": "ground beef",
+    "support": 0.003199573390214638,
+    "confidence": 0.46153846153846156,
+    "lift": 4.697421981004071
+  },
+  {
+    "rule": "cereals, spaghetti -> ground beef",
+    "base": "cereals, spaghetti",
+    "add": "ground beef",
+    "support": 0.0030662578322890282,
+    "confidence": 0.45999999999999996,
+    "lift": 4.681763907734057
+  },
+  {
+    "rule": "french fries, ground beef -> herb & pepper",
+    "base": "french fries, ground beef",
+    "add": "herb & pepper",
+    "support": 0.003199573390214638,
+    "confidence": 0.23076923076923078,
+    "lift": 4.665768194070081
+  },
+  {
+    "rule": "pasta -> shrimp",
+    "base": "pasta",
+    "add": "shrimp",
+    "support": 0.005065991201173177,
+    "confidence": 0.3220338983050847,
+    "lift": 4.506672147735896
+  },
+  {
+    "rule": "chocolate, herb & pepper -> ground beef",
+    "base": "chocolate, herb & pepper",
+    "add": "ground beef",
+    "support": 0.003999466737768298,
+    "confidence": 0.4411764705882354,
+    "lift": 4.4901827759597746
+  },
+  {
+    "rule": "cake, frozen vegetables -> tomatoes",
+    "base": "cake, frozen vegetables",
+    "add": "tomatoes",
+    "support": 0.0030662578322890282,
+    "confidence": 0.2987012987012987,
+    "lift": 4.367560314928736
+  },
+  {
+    "rule": "milk, tomatoes -> soup",
+    "base": "milk, tomatoes",
+    "add": "soup",
+    "support": 0.0030662578322890282,
+    "confidence": 0.21904761904761905,
+    "lift": 4.335293378565146
+  },
+  {
+    "rule": "eggs, ground beef -> herb & pepper",
+    "base": "eggs, ground beef",
+    "add": "herb & pepper",
+    "support": 0.0041327822956939075,
+    "confidence": 0.2066666666666667,
+    "lift": 4.178454627133872
+  },
+  {
+    "rule": "milk, olive oil -> soup",
+    "base": "milk, olive oil",
+    "add": "soup",
+    "support": 0.0035995200639914677,
+    "confidence": 0.2109375,
+    "lift": 4.174781497361478
+  },
+  {
+    "rule": "whole wheat pasta -> olive oil",
+    "base": "whole wheat pasta",
+    "add": "olive oil",
+    "support": 0.007998933475536596,
+    "confidence": 0.2714932126696833,
+    "lift": 4.122410097642296
+  },
+  {
+    "rule": "herb & pepper, spaghetti -> ground beef",
+    "base": "herb & pepper, spaghetti",
+    "add": "ground beef",
+    "support": 0.006399146780429276,
+    "confidence": 0.3934426229508197,
+    "lift": 4.004359721511667
+  },
+  {
+    "rule": "herb & pepper, milk -> ground beef",
+    "base": "herb & pepper, milk",
+    "add": "ground beef",
+    "support": 0.0035995200639914677,
+    "confidence": 0.3913043478260869,
+    "lift": 3.9825968969382335
+  },
+  {
+    "rule": "herb & pepper, mineral water -> ground beef",
+    "base": "herb & pepper, mineral water",
+    "add": "ground beef",
+    "support": 0.006665777896280496,
+    "confidence": 0.39062500000000006,
+    "lift": 3.975682666214383
+  },
+  {
+    "rule": "cereals, ground beef -> spaghetti",
+    "base": "cereals, ground beef",
+    "add": "spaghetti",
+    "support": 0.0030662578322890282,
+    "confidence": 0.6764705882352942,
+    "lift": 3.8853031258445188
+  },
+  {
+    "rule": "chicken, olive oil -> milk",
+    "base": "chicken, olive oil",
+    "add": "milk",
+    "support": 0.0035995200639914677,
+    "confidence": 0.5,
+    "lift": 3.858539094650206
+  }
+]

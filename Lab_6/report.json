@@ -1,0 +1,32 @@
+{
+  "grid_size": [
+    9,
+    6
+  ],
+  "n_neurons": 54,
+  "features": [
+    "INDUS",
+    "DIS",
+    "NOX",
+    "LSTAT",
+    "AGE",
+    "RAD",
+    "B"
+  ],
+  "n_samples": 506,
+  "iterations": 100,
+  "learning_rate": 0.5,
+  "sigma": 1.0,
+  "initial_quantization_error": 1.8211502024544008,
+  "final_quantization_error": 1.7808553115495063,
+  "topographic_error": 0.7134387351778656,
+  "max_neuron_activations": 111,
+  "empty_neurons_count": 17,
+  "figures": {
+    "training_loss": "figures/som_training_loss.png",
+    "umatrix": "figures/som_umatrix.png",
+    "counts": "figures/som_counts.png",
+    "bmu_mapping": "figures/som_bmu_mapping.png",
+    "component_planes": "figures/som_component_planes.png"
+  }
+}

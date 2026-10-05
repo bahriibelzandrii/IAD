@@ -1,0 +1,28 @@
+getwd()
+setwd("D:/lab1")
+
+#dy1 <- read.csv(file = "Voice.txt", sep="")
+
+da3<-read.table(file.choose(),header=TRUE) # обрати file для відкритття в діалоговому вікні
+
+summary(aov(da3$Hei~da3$Factor))
+da3
+
+summary(aov(Hei~Factor))
+da1<-da3[as.character(da3[,"Factor"])!="Bass" & (da3[,"Factor"])!="Tenor",]
+summary(aov(da1$Hei~da1$Factor))
+da2<-da3[as.character(da3[,"Factor"])!="Soprano" & (da3[,"Factor"])!="Alto",]
+summary(aov(da2$Hei~da2$Factor))
+attach(da2)
+
+#двоfакторни аналіз даних
+rat<-read.table(file.choose(),header=TRUE)
+rat
+attach(rat)
+
+#перевіряємо вплив і середовища, і генетичних властивостей, і сукупності дій цих факторів
+z<-aov(rat$ERRORS~rat$ENVIRNMNT+rat$STRAIN+rat$ENVIRNMNT:STRAIN)
+anova(z)
+# є залежність від середовища бо р = 0,0267
+# є залежність від генетики бо р = 0.0326
+#впливу комбінації цих факторів нема: р = 0,9916.

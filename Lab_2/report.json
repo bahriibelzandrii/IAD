@@ -50,19 +50,19 @@
     }
   },
   "part_2_custom": {
-    "dataset": "flats.csv (нерухомість України)",
-    "sample_size": 684,
-    "feature_x": "Загальна площа (м²)",
-    "target_y": "Ціна квартири (грн)",
-    "correlation_r": 0.6729,
-    "correlation_p_value": 2.408242947018382e-91,
+    "dataset": "Advertising.csv (витрати на рекламу та обсяг продажів)",
+    "sample_size": 200,
+    "feature_x": "Витрати на TV-рекламу (тис. $)",
+    "target_y": "Обсяг продажів (тис. од.)",
+    "correlation_r": 0.7822,
+    "correlation_p_value": 1.4673897001946247e-42,
     "regression": {
-      "slope_a": 25180.99,
-      "intercept_b": -408119.63,
-      "equation": "Ціна = 25180.99 * Площа + (-408119.63)",
-      "r2": 0.4527,
-      "mse": 642447754526.78,
-      "rmse": 801528.39
+      "slope_a": 0.0475,
+      "intercept_b": 7.03,
+      "equation": "Sales = 0.0475 * TV + 7.03",
+      "r2": 0.6119,
+      "mse": 10.51,
+      "rmse": 3.24
     }
   }
 }

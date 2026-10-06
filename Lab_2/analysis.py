@@ -133,35 +133,31 @@ def analyze_anaconda():
 
 
 def analyze_custom():
-    """Частина 2: Дослідження залежності між площею квартири та її вартістю (flats.csv)."""
-    # Шлях до flats.csv (з репозиторію Lab_1 або локально)
+    """Частина 2: Дослідження залежності між витратами на TV-рекламу та обсягом продажів (Advertising.csv)."""
     candidates = [
-        os.path.join(BASE_DIR, "flats.csv"),
-        os.path.join(BASE_DIR, "..", "Lab_1", "flats.csv")
+        os.path.join(BASE_DIR, "Advertising.csv"),
+        "Advertising.csv",
     ]
-    flats_path = None
+    data_path = None
     for p in candidates:
         if os.path.exists(p):
-            flats_path = p
+            data_path = p
             break
 
-    if not flats_path:
-        raise FileNotFoundError("Файл flats.csv не знайдено.")
+    if not data_path:
+        raise FileNotFoundError("Файл Advertising.csv не знайдено.")
+    df_adv = pd.read_csv(data_path)
 
-    df_flats = pd.read_csv(flats_path)
-    area = pd.to_numeric(df_flats["Загальна_площа"], errors="coerce")
-    price = pd.to_numeric(df_flats["Ціна"], errors="coerce")
+    tv = pd.to_numeric(df_adv["TV"], errors="coerce")
+    sales = pd.to_numeric(df_adv["Sales"], errors="coerce")
 
-    # Фільтрація коректних числових значень та усунення явних аномалій
-    mask = area.notna() & price.notna()
-    df_clean = pd.DataFrame({"area": area[mask], "price": price[mask]})
-    df_clean = df_clean[(df_clean["area"] >= 15) & (df_clean["area"] <= 250)]
-    df_clean = df_clean[(df_clean["price"] >= 100000) & (df_clean["price"] <= 15000000)]
+    mask = tv.notna() & sales.notna()
+    df_clean = pd.DataFrame({"TV": tv[mask], "Sales": sales[mask]})
 
-    X_cust = df_clean[["area"]].values
-    Y_cust = df_clean["price"].values
+    X_cust = df_clean[["TV"]].values
+    Y_cust = df_clean["Sales"].values
 
-    r_cust, p_cust = stats.pearsonr(df_clean["area"], df_clean["price"])
+    r_cust, p_cust = stats.pearsonr(df_clean["TV"], df_clean["Sales"])
 
     model_cust = LinearRegression()
     model_cust.fit(X_cust, Y_cust)
@@ -176,31 +172,36 @@ def analyze_custom():
 
     # 4. Графік регресії власного датасету: custom_regression.png
     plt.figure(figsize=(7.5, 5), dpi=300)
-    plt.scatter(df_clean["area"], df_clean["price"] / 1000, color="royalblue", alpha=0.5, s=35, edgecolors="none", label="Квартири (вибірка)")
-    sorted_idx = np.argsort(df_clean["area"].values)
-    sorted_x = df_clean["area"].values[sorted_idx]
-    sorted_pred = (Y_pred_c / 1000)[sorted_idx]
-    plt.plot(sorted_x, sorted_pred, color="darkorange", linewidth=2.5,
-             label=f"Регресія: $\\hat{{Y}} = {slope_c/1000:.2f}X + ({intercept_c/1000:.2f})$ тис. грн")
-    plt.title(f"Залежність ціни від загальної площі квартири ($r = {r_cust:.4f}$, $R^2 = {r2_c:.4f}$)")
-    plt.xlabel("Загальна площа ($м^2$)")
-    plt.ylabel("Ціна квартири (тис. грн)")
-    plt.legend(frameon=True)
+    plt.scatter(df_clean["TV"], df_clean["Sales"],
+                color="#3182ce", alpha=0.75, s=40, edgecolors="#1a365d", linewidth=0.8,
+                label=f"Рекламні кампанії (N = {len(df_clean)})")
+    sorted_idx = np.argsort(df_clean["TV"].values)
+    sorted_x = df_clean["TV"].values[sorted_idx]
+    sorted_pred = Y_pred_c[sorted_idx]
+    sign = "+" if intercept_c >= 0 else "-"
+    eq_label = rf"Регресія: $\hat{{Y}} = {slope_c:.3f}X {sign} {abs(intercept_c):.2f}$"
+    plt.plot(sorted_x, sorted_pred, color="#e53e3e", linewidth=2.5, label=eq_label)
+    plt.title(f"Залежність продажів від витрат на TV-рекламу ($r = {r_cust:.4f}$, $R^2 = {r2_c:.4f}$)")
+    plt.xlabel("Витрати на TV-рекламу (тис. $)")
+    plt.ylabel("Обсяг продажів (тис. од.)")
+    plt.legend(frameon=True, loc="upper left")
+    plt.tight_layout()
     custom_plot_path = os.path.join(FIG_DIR, "custom_regression.png")
     plt.savefig(custom_plot_path, dpi=300)
     plt.close()
 
+    sign_eq = "+" if intercept_c >= 0 else "-"
     return {
-        "dataset": "flats.csv (нерухомість України)",
+        "dataset": "Advertising.csv (витрати на рекламу та обсяг продажів)",
         "sample_size": int(len(df_clean)),
-        "feature_x": "Загальна площа (м²)",
-        "target_y": "Ціна квартири (грн)",
+        "feature_x": "Витрати на TV-рекламу (тис. $)",
+        "target_y": "Обсяг продажів (тис. од.)",
         "correlation_r": round(float(r_cust), 4),
         "correlation_p_value": float(p_cust),
         "regression": {
-            "slope_a": round(slope_c, 2),
+            "slope_a": round(slope_c, 4),
             "intercept_b": round(intercept_c, 2),
-            "equation": f"Ціна = {slope_c:.2f} * Площа + ({intercept_c:.2f})",
+            "equation": f"Sales = {slope_c:.4f} * TV {sign_eq} {abs(intercept_c):.2f}",
             "r2": round(r2_c, 4),
             "mse": round(mse_c, 2),
             "rmse": round(rmse_c, 2)
@@ -218,7 +219,7 @@ def main():
     print(f"  Залишки: середнє = {res_anaconda['residuals']['mean']:.2e}, Shapiro p-value = {res_anaconda['residuals']['shapiro_p']:.4e}")
 
     res_custom = analyze_custom()
-    print("\n[2] Власний датасет (flats):")
+    print("\n[2] Власний датасет (Advertising):")
     print(f"  r = {res_custom['correlation_r']}, p = {res_custom['correlation_p_value']:.4e}")
     print(f"  Модель: {res_custom['regression']['equation']}")
     print(f"  R^2 = {res_custom['regression']['r2']}, RMSE = {res_custom['regression']['rmse']}")

@@ -1,0 +1,7 @@
+ - 🔗 Відкрити Лабораторну 2 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_2/notebook.ipynb)
+ - 🔗 Відкрити Лабораторну 3 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_3/notebook.ipynb)
+ - 🔗 Відкрити Лабораторну 4 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_4/notebook.ipynb)
+ - 🔗 Відкрити Лабораторну 5 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_5/notebook.ipynb)
+ - 🔗 Відкрити Лабораторну 6 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_6/notebook.ipynb)
+ - 🔗 Відкрити Лабораторну 7 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_7/notebook.ipynb)
+ - 🔗 Відкрити Лабораторну 8 в Colab (https://colab.research.google.com/github/bahriibelzandrii/IAD/blob/main/Lab_8/notebook.ipynb)

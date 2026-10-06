@@ -405,25 +405,32 @@ def build_notebook():
         "cell_type": "markdown",
         "metadata": {},
         "source": [
-            "## 7. Дослідження власного числового набору даних (Частина 2: flats.csv)\n",
-            "**Мета дії:** Дослідити взаємозв'язок між загальною площею квартири (м²) та її ринковою ціною (грн), перевірити статистичну значущість зв'язку, побудувати модель парної лінійної регресії та зберегти результуючий графік.\n",
-            "$$\\rightarrow$$ **Висновок:** Встановлено помірну статистично достовірну лінійну кореляцію ($r = 0.6729, p = 2.41 \\cdot 10^{-91}$); модель пояснює $45.27\\%$ варіації вартості ($R^2 = 0.4527$, RMSE $\\approx 801\\,528$ грн)."
+            "## 7. Дослідження власного числового набору даних (Частина 2: Advertising.csv)\n",
+            "**Мета дії:** Дослідити лінійну залежність між обсягом витрат на телевізійну рекламу (тис. $) та кількістю проданої продукції (тис. од.), оцінити силу зв'язку через коефіцієнт кореляції Пірсона, побудувати модель лінійної регресії та побудувати результуючий графік.\n",
+            "$$\\rightarrow$$ **Висновок:** Виявлено стійку статистично значущу лінійну кореляцію ($r = 0.7822, p = 1.47 \\cdot 10^{-42}$); парна лінійна модель пояснює $61.19\\%$ дисперсії продажів ($R^2 = 0.6119$, RMSE $= 3.24$ тис. од.)."
         ]
     })
 
     # Prepare custom data
-    flats_path = os.path.join(BASE_DIR, "..", "Lab_1", "flats.csv")
-    df_flats = pd.read_csv(flats_path)
-    area = pd.to_numeric(df_flats["Загальна_площа"], errors="coerce")
-    price = pd.to_numeric(df_flats["Ціна"], errors="coerce")
-    mask = area.notna() & price.notna()
-    df_clean = pd.DataFrame({"area": area[mask], "price": price[mask]})
-    df_clean = df_clean[(df_clean["area"] >= 15) & (df_clean["area"] <= 250)]
-    df_clean = df_clean[(df_clean["price"] >= 100000) & (df_clean["price"] <= 15000000)]
+    adv_candidates = [
+        os.path.join(BASE_DIR, "Advertising.csv"),
+        "Advertising.csv"
+    ]
+    adv_path = None
+    for p in adv_candidates:
+        if os.path.exists(p):
+            adv_path = p
+            break
 
-    X_c = df_clean[["area"]].values
-    Y_c = df_clean["price"].values
-    r_cust, p_cust = stats.pearsonr(df_clean["area"], df_clean["price"])
+    df_adv = pd.read_csv(adv_path)
+    tv = pd.to_numeric(df_adv["TV"], errors="coerce")
+    sales = pd.to_numeric(df_adv["Sales"], errors="coerce")
+    mask = tv.notna() & sales.notna()
+    df_clean = pd.DataFrame({"TV": tv[mask], "Sales": sales[mask]})
+
+    X_c = df_clean[["TV"]].values
+    Y_c = df_clean["Sales"].values
+    r_cust, p_cust = stats.pearsonr(df_clean["TV"], df_clean["Sales"])
     mod_c = LinearRegression().fit(X_c, Y_c)
     slope_c = float(mod_c.coef_[0])
     int_c = float(mod_c.intercept_)
@@ -432,73 +439,71 @@ def build_notebook():
     rmse_c = float(np.sqrt(mean_squared_error(Y_c, Y_pred_c)))
 
     plt.figure(figsize=(8.5, 5), dpi=150)
-    plt.scatter(df_clean["area"], df_clean["price"] / 1000, color="royalblue", alpha=0.5, s=35, edgecolors="none", label="Квартири (вибірка)")
-    s_idx = np.argsort(df_clean["area"].values)
-    plt.plot(df_clean["area"].values[s_idx], (Y_pred_c / 1000)[s_idx], color="darkorange", linewidth=2.6,
-             label=f"Регресія: $\\hat{{Y}} = {slope_c/1000:.2f}X - {-int_c/1000:.2f}$ тис. грн")
-    plt.title(f"Залежність ціни від загальної площі квартири ($r = {r_cust:.4f}$, $R^2 = {r2_c:.4f}$)")
-    plt.xlabel("Загальна площа (м²)")
-    plt.ylabel("Ціна квартири (тис. грн)")
-    plt.legend(frameon=True)
+    plt.scatter(df_clean["TV"], df_clean["Sales"], color="#3182ce", alpha=0.75, s=40, edgecolors="#1a365d", linewidth=0.8, label=f"Рекламні кампанії (N = {len(df_clean)})")
+    s_idx = np.argsort(df_clean["TV"].values)
+    sign = "+" if int_c >= 0 else "-"
+    plt.plot(df_clean["TV"].values[s_idx], Y_pred_c[s_idx], color="#e53e3e", linewidth=2.5,
+             label=rf"Регресія: $\hat{{Y}} = {slope_c:.3f}X {sign} {abs(int_c):.2f}$")
+    plt.title(f"Залежність продажів від витрат на TV-рекламу ($r = {r_cust:.4f}$, $R^2 = {r2_c:.4f}$)")
+    plt.xlabel("Витрати на TV-рекламу (тис. $)")
+    plt.ylabel("Обсяг продажів (тис. од.)")
+    plt.legend(frameon=True, loc="upper left")
+    plt.tight_layout()
     cust_b64 = fig_to_base64()
 
     code_7 = (
-        "# Завантаження даних ринку нерухомості\n"
-        "flats_file = 'flats.csv'\n"
-        "if not os.path.exists(flats_file):\n"
-        "    if os.path.exists('Lab_1/flats.csv'):\n"
-        "        flats_file = 'Lab_1/flats.csv'\n"
-        "    elif os.path.exists('../Lab_1/flats.csv'):\n"
-        "        flats_file = '../Lab_1/flats.csv'\n"
+        "# Завантаження даних витрат на рекламу та продажів\n"
+        "import urllib.request\n"
+        "adv_file = 'Advertising.csv'\n"
+        "if not os.path.exists(adv_file):\n"
+        "    url = 'https://raw.githubusercontent.com/justmarkham/scikit-learn-videos/master/data/Advertising.csv'\n"
+        "    urllib.request.urlretrieve(url, adv_file)\n"
         "\n"
-        "df_flats = pd.read_csv(flats_file)\n"
-        "area_num = pd.to_numeric(df_flats['Загальна_площа'], errors='coerce')\n"
-        "price_num = pd.to_numeric(df_flats['Ціна'], errors='coerce')\n"
-        "\n"
-        "# Фільтрація коректних числових значень\n"
-        "valid_mask = area_num.notna() & price_num.notna()\n"
-        "df_clean = pd.DataFrame({'area': area_num[valid_mask], 'price': price_num[valid_mask]})\n"
-        "df_clean = df_clean[(df_clean['area'] >= 15) & (df_clean['area'] <= 250)]\n"
-        "df_clean = df_clean[(df_clean['price'] >= 100000) & (df_clean['price'] <= 15000000)]\n"
-        "print(f'Кількість спостережень після фільтрації: {len(df_clean)}')\n"
+        "df_adv = pd.read_csv(adv_file)\n"
+        "tv = pd.to_numeric(df_adv['TV'], errors='coerce')\n"
+        "sales = pd.to_numeric(df_adv['Sales'], errors='coerce')\n"
+        "valid_mask = tv.notna() & sales.notna()\n"
+        "df_clean = pd.DataFrame({'TV': tv[valid_mask], 'Sales': sales[valid_mask]})\n"
+        "print(f'Кількість спостережень: {len(df_clean)}')\n"
         "\n"
         "# Кореляційний аналіз\n"
-        "r_val, p_val = stats.pearsonr(df_clean['area'], df_clean['price'])\n"
+        "r_val, p_val = stats.pearsonr(df_clean['TV'], df_clean['Sales'])\n"
         "print(f'Коефіцієнт кореляції Пірсона r = {r_val:.4f}, p-value = {p_val:.4e}')\n"
         "\n"
         "# Лінійна регресія\n"
-        "X_c = df_clean[['area']].values\n"
-        "Y_c = df_clean['price'].values\n"
-        "model_flats = LinearRegression().fit(X_c, Y_c)\n"
-        "Y_pred_c = model_flats.predict(X_c)\n"
+        "X_c = df_clean[['TV']].values\n"
+        "Y_c = df_clean['Sales'].values\n"
+        "model_adv = LinearRegression().fit(X_c, Y_c)\n"
+        "Y_pred_c = model_adv.predict(X_c)\n"
         "\n"
-        "slope_c = float(model_flats.coef_[0])\n"
-        "intercept_c = float(model_flats.intercept_)\n"
+        "slope_c = float(model_adv.coef_[0])\n"
+        "intercept_c = float(model_adv.intercept_)\n"
         "r2_c = r2_score(Y_c, Y_pred_c)\n"
         "rmse_c = np.sqrt(mean_squared_error(Y_c, Y_pred_c))\n"
         "\n"
-        "print(f'Рівняння: Ціна = {slope_c:.2f} * Площа + ({intercept_c:.2f})')\n"
+        "print(f'Рівняння: Sales = {slope_c:.4f} * TV + {intercept_c:.2f}')\n"
         "print(f'Коефіцієнт детермінації R^2 = {r2_c:.4f}')\n"
-        "print(f'RMSE = {rmse_c:,.2f} грн')\n"
+        "print(f'RMSE = {rmse_c:.2f} тис. од.')\n"
         "\n"
         "# Візуалізація\n"
         "plt.figure(figsize=(8.5, 5))\n"
-        "plt.scatter(df_clean['area'], df_clean['price'] / 1000, color='royalblue', alpha=0.5, s=35, edgecolors='none', label='Квартири (вибірка)')\n"
-        "s_idx = np.argsort(df_clean['area'].values)\n"
-        "plt.plot(df_clean['area'].values[s_idx], (Y_pred_c / 1000)[s_idx], color='darkorange', linewidth=2.6,\n"
-        "         label=f'Регресія: $\\\\hat{{Y}} = {slope_c/1000:.2f}X - {-intercept_c/1000:.2f}$ тис. грн')\n"
-        "plt.title(f'Залежність ціни від загальної площі квартири ($r = {r_val:.4f}$, $R^2 = {r2_c:.4f}$)')\n"
-        "plt.xlabel('Загальна площа (м²)')\n"
-        "plt.ylabel('Ціна квартири (тис. грн)')\n"
-        "plt.legend(frameon=True)\n"
+        "plt.scatter(df_clean['TV'], df_clean['Sales'], color='#3182ce', alpha=0.75, s=40, edgecolors='#1a365d', linewidth=0.8, label=f'Рекламні кампанії (N = {len(df_clean)}')\n"
+        "s_idx = np.argsort(df_clean['TV'].values)\n"
+        "plt.plot(df_clean['TV'].values[s_idx], Y_pred_c[s_idx], color='#e53e3e', linewidth=2.5,\n"
+        "         label=rf'Регресія: $\\\\hat{{Y}} = {slope_c:.3f}X + {intercept_c:.2f}$')\n"
+        "plt.title(f'Залежність продажів від витрат на TV-рекламу ($r = {r_val:.4f}$, $R^2 = {r2_c:.4f}$)')\n"
+        "plt.xlabel('Витрати на TV-рекламу (тис. $)')\n"
+        "plt.ylabel('Обсяг продажів (тис. од.)')\n"
+        "plt.legend(frameon=True, loc='upper left')\n"
+        "plt.tight_layout()\n"
         "plt.show()"
     )
     out_text_7 = (
-        f"Кількість спостережень після фільтрації: {len(df_clean)}\n"
+        f"Кількість спостережень: {len(df_clean)}\n"
         f"Коефіцієнт кореляції Пірсона r = {r_cust:.4f}, p-value = {p_cust:.4e}\n"
-        f"Рівняння: Ціна = {slope_c:.2f} * Площа + ({int_c:.2f})\n"
+        f"Рівняння: Sales = {slope_c:.4f} * TV + {int_c:.2f}\n"
         f"Коефіцієнт детермінації R^2 = {r2_c:.4f}\n"
-        f"RMSE = {rmse_c:,.2f} грн\n"
+        f"RMSE = {rmse_c:.2f} тис. од.\n"
     )
     cells.append({
         "cell_type": "code",

@@ -182,7 +182,7 @@ def analyze_custom():
     eq_label = rf"Регресія: $\hat{{Y}} = {slope_c:.3f}X {sign} {abs(intercept_c):.2f}$"
     plt.plot(sorted_x, sorted_pred, color="#e53e3e", linewidth=2.5, label=eq_label)
     plt.title(f"Залежність продажів від витрат на TV-рекламу ($r = {r_cust:.4f}$, $R^2 = {r2_c:.4f}$)")
-    plt.xlabel("Витрати на TV-рекламу (тис. $)")
+    plt.xlabel("Витрати на TV-рекламу (тис. USD)")
     plt.ylabel("Обсяг продажів (тис. од.)")
     plt.legend(frameon=True, loc="upper left")
     plt.tight_layout()
@@ -194,7 +194,7 @@ def analyze_custom():
     return {
         "dataset": "Advertising.csv (витрати на рекламу та обсяг продажів)",
         "sample_size": int(len(df_clean)),
-        "feature_x": "Витрати на TV-рекламу (тис. $)",
+        "feature_x": "Витрати на TV-рекламу (тис. USD)",
         "target_y": "Обсяг продажів (тис. од.)",
         "correlation_r": round(float(r_cust), 4),
         "correlation_p_value": float(p_cust),

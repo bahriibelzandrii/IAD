@@ -52,7 +52,7 @@
   "part_2_custom": {
     "dataset": "Advertising.csv (витрати на рекламу та обсяг продажів)",
     "sample_size": 200,
-    "feature_x": "Витрати на TV-рекламу (тис. $)",
+    "feature_x": "Витрати на TV-рекламу (тис. USD)",
     "target_y": "Обсяг продажів (тис. од.)",
     "correlation_r": 0.7822,
     "correlation_p_value": 1.4673897001946247e-42,
